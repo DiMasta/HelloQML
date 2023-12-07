@@ -5,12 +5,11 @@ Window {
     width: 512
     height: 512
     visible: true
-    title: qsTr("Hello World")
+    title: qsTr("Hello QML")
 
     Flipable {
         id: flipable
         anchors.centerIn: parent
-        property bool flipped: false
 
         front: Rectangle {
             color: "green"
@@ -19,7 +18,8 @@ Window {
             anchors.centerIn: parent
 
             Text {
-                text: "1"
+                id: frontText
+                text: backend.frontValue
                 font.pixelSize: parent.height / 2
                 anchors.centerIn: parent
             }
@@ -32,7 +32,8 @@ Window {
             anchors.centerIn: parent
 
             Text {
-                text: "2"
+                id: backText
+                text: backend.backValue
                 font.pixelSize: parent.height / 2
                 anchors.centerIn: parent
             }
@@ -42,18 +43,22 @@ Window {
             axis.x: 1
             axis.y: 0
             axis.z: 0
-            angle: flipable.flipped ? 180 : 0
+            angle: backend.flipped ? 180 : 0
 
             Behavior on angle {
                 NumberAnimation {
                     duration: 500
                 }
             }
+
+            onAngleChanged: {
+                backend.onAngleChanged(angle);
+            }
         }
     }
 
     MouseArea {
         anchors.fill: parent
-        onClicked: flipable.flipped = !flipable.flipped
+        onClicked: backend.onQmlButtonClicked();
     }
 }
