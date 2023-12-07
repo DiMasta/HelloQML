@@ -1,13 +1,9 @@
 #include "cppbackend.h"
 
 CppBackend::CppBackend(QObject* parent):
-    QObject(parent),
-    frontValue(0),
-    backValue(0),
-    flipped(false),
-    pendingUpdate(false)
+    QObject(parent)
 {
-
+    frontValue = nextCountingValue(countingIdx);
 }
 
 void CppBackend::onQmlButtonClicked() {
@@ -19,13 +15,34 @@ void CppBackend::onQmlButtonClicked() {
 void CppBackend::onAngleChanged(qreal angle) {
     //qDebug() << "Angle: " << angle;
     if (angle > MIDDLE_ANGLE && pendingUpdate && flipped) {
-        setFrontValue(frontValue + 1);
+        ++countingIdx;
+        setBackValue(nextCountingValue(countingIdx));
         pendingUpdate = false;
     }
 
     if (angle < MIDDLE_ANGLE && pendingUpdate && !flipped) {
-        setBackValue(backValue - 1);
+        ++countingIdx;
+        setFrontValue(nextCountingValue(countingIdx));
         pendingUpdate = false;
+    }
+}
+
+int CppBackend::nextCountingValue(const int idx) const {
+    if (idx < 0) {
+        return 0;
+    }
+    else if (idx <= 1) {
+        return idx;
+    } else {
+        int a = 0;
+        int b = 1;
+        int fib = 0;
+        for (int i = 2; i <= idx; ++i) {
+            fib = a + b;
+            a = b;
+            b = fib;
+        }
+        return fib;
     }
 }
 

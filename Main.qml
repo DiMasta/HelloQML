@@ -21,6 +21,7 @@ Window {
                 id: frontText
                 text: backend.frontValue
                 font.pixelSize: parent.height / 2
+                scale: Math.min(parent.width / implicitWidth, 1.0)
                 anchors.centerIn: parent
             }
         }
@@ -35,6 +36,7 @@ Window {
                 id: backText
                 text: backend.backValue
                 font.pixelSize: parent.height / 2
+                scale: Math.min(parent.width / implicitWidth, 1.0)
                 anchors.centerIn: parent
             }
         }

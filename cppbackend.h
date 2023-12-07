@@ -34,11 +34,17 @@ public slots:
     void onQmlButtonClicked();
     void onAngleChanged(qreal angle);
 
-private:
-    int frontValue;
-    int backValue;
-    bool flipped;
-    bool pendingUpdate;
+private: ///< Function members
+
+    /// Return the counting value based on the counting index reached
+    int nextCountingValue(const int idx) const;
+
+private: ///< Data members
+    int frontValue = 0;
+    int backValue = 0;
+    int countingIdx = 3; ///< The index to which the counting have reached
+    bool flipped = false;
+    bool pendingUpdate = false;
 };
 
 #endif // CPPBACKEND_H
