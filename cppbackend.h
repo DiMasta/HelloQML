@@ -42,7 +42,7 @@ private: ///< Function members
 private: ///< Data members
     int frontValue = 0;
     int backValue = 0;
-    int countingIdx = 3; ///< The index to which the counting have reached
+    int countingIdx = 8; ///< The index to which the counting have reached
     bool flipped = false;
     bool pendingUpdate = false;
 };
